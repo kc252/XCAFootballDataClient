@@ -12,11 +12,11 @@ public struct FootballDataClient {
     private let apiKey: String
     private let baseURL = "https://api.football-data.org/v4"
     
-//    private let jsonDecoder: JSONDecoder = {
-//        let decoder = JSONDecoder()
-//        decoder.dateDecodingStrategy = .iso8601
-//        return decoder
-//    }()
+    private let jsonDecoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }()
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -67,7 +67,7 @@ public struct FootballDataClient {
             throw "Data not found. Code \((response as? HTTPURLResponse)?.statusCode ?? -1)"
         }
         
-        let model = try decodeJson(D: D.self, data: data)
+        let model = try JSONDecoder().decode(D.self, from: data)
         return model
     }
     
@@ -88,16 +88,4 @@ extension String: Error, LocalizedError {
     
     public var errorDescription: String? { self }
     
-}
-
-func decodeJson<T: Decodable>(D: T.Type, data: Data) throws -> T {
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .iso8601
-    do {
-        return try decoder.decode(T.self, from: data)
-    } catch {
-        print(String(describing: error))
-    }
-    
-    return try! T(from: (any Decoder).self as! Decoder)
 }
