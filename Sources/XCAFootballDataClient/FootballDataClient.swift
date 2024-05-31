@@ -12,11 +12,11 @@ public struct FootballDataClient {
     private let apiKey: String
     private let baseURL = "https://api.football-data.org/v4"
     
-    private let jsonDecoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return decoder
-    }()
+//    private let jsonDecoder: JSONDecoder = {
+//        let decoder = JSONDecoder()
+//        decoder.dateDecodingStrategy = .iso8601
+//        return decoder
+//    }()
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -33,7 +33,7 @@ public struct FootballDataClient {
         let urlRequest = URLRequest(url: URL(string: url)!)
         let response: StandingResponse = try await fetchData(request: urlRequest)
         guard let standingTable = response.standings?.first?.table else {
-            throw "Top Scorers not found"
+            throw "Standings not found"
         }
         return standingTable
     }
@@ -43,7 +43,7 @@ public struct FootballDataClient {
         let urlRequest = URLRequest(url: URL(string: url)!)
         let response: TopScorersResponse = try await fetchData(request: urlRequest)
         guard let scorers = response.scorers else {
-            throw "Standings not found"
+            throw "Top Scorers not found"
         }
         return scorers
     }
@@ -67,7 +67,7 @@ public struct FootballDataClient {
             throw "Data not found. Code \((response as? HTTPURLResponse)?.statusCode ?? -1)"
         }
         
-        let model = try self.jsonDecoder.decode(D.self, from: data)
+        let model = try decodeJson(D: D.self, data: data)
         return model
     }
     
@@ -90,3 +90,8 @@ extension String: Error, LocalizedError {
     
 }
 
+func decodeJson<T: Decodable>(D: T.Type, data: Data) throws -> T {
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .iso8601
+    return try decoder.decode(T.self, from: data)
+}
