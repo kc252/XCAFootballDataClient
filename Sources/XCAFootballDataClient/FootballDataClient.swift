@@ -93,5 +93,11 @@ extension String: Error, LocalizedError {
 func decodeJson<T: Decodable>(D: T.Type, data: Data) throws -> T {
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
-    return try decoder.decode(T.self, from: data)
+    do {
+        return try decoder.decode(T.self, from: data)
+    } catch {
+        print(String(describing: error))
+    }
+    
+    return try! T(from: (any Decoder).self as! Decoder)
 }
