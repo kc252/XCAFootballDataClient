@@ -109,3 +109,10 @@ public struct Booking: Decodable {
 public enum Card: Decodable {
     case YELLOW , RED
 }
+
+
+public struct LiveMatchesResponse: Decodable {
+    
+    public var matches: [Match]?
+    
+}

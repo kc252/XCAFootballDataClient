@@ -48,14 +48,14 @@ public struct FootballDataClient {
         return scorers
     }
     
-    public func fetchLiveScore(competitionId: Int, filterOption: FilterOption = .latest) async throws -> [Scorer] {
+    public func fetchLiveScore(competitionId: Int, filterOption: FilterOption = .latest) async throws -> [Match] {
         let url = baseURL + "/competitions/\(competitionId)/matches?\(filterOption.urlQuery)"
         let urlRequest = URLRequest(url: URL(string: url)!)
-        let response: TopScorersResponse = try await fetchData(request: urlRequest)
-        guard let scorers = response.scorers else {
+        let response: LiveMatchesResponse = try await fetchData(request: urlRequest)
+        guard let matches = response.matches else {
             throw "Live matches not found"
         }
-        return scorers
+        return matches
     }
     
     private func fetchData<D: Decodable>(request: URLRequest) async throws -> D {
