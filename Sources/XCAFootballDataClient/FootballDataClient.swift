@@ -48,6 +48,16 @@ public struct FootballDataClient {
         return scorers
     }
     
+    public func fetchLiveScore(competitionId: Int, filterOption: FilterOption = .latest) async throws -> [Scorer] {
+        let url = baseURL + "/competitions/\(competitionId)/matches?\(filterOption.urlQuery)"
+        let urlRequest = URLRequest(url: URL(string: url)!)
+        let response: TopScorersResponse = try await fetchData(request: urlRequest)
+        guard let scorers = response.scorers else {
+            throw "Live matches not found"
+        }
+        return scorers
+    }
+    
     private func fetchData<D: Decodable>(request: URLRequest) async throws -> D {
         var urlRequest = request
         urlRequest.addValue(apiKey, forHTTPHeaderField: "X-Auth-Token")

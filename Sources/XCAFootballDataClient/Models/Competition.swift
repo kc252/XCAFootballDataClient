@@ -24,6 +24,7 @@ public extension Competition {
     
     static var defaultCompetitions: [Competition] {
         [
+            Competition(id: 2001, name: "Champions Leaguew"),
             Competition(id: 2014, name: "Spain La Liga"),
             Competition(id: 2021, name: "English Premier League"),
             Competition(id: 2019, name: "Italian Serie A"),
