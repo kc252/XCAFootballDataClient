@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Kevin Campbell on 31/05/2024.
 //
@@ -15,7 +15,7 @@ public struct Match: Identifiable, Decodable {
     public let season: Season?
     
     public let id: Int
-    public let utcDate: String?
+    public let utcDate: Date
     public let status: Status?
     public let minute: Int?
     public let injuryTime: Int?
@@ -46,7 +46,7 @@ public enum Stage: Decodable {
 
 public struct LiveTeam: Identifiable, Decodable {
     public let id: Int
-    public let name: String? 
+    public let name: String?
     public let shortName: String?
     public let tla: String?
     public let crest: String?
