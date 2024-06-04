@@ -15,7 +15,7 @@ public struct Match: Identifiable, Decodable {
     public let season: Season?
     
     public let id: Int
-    public let utcDate: Double
+    public let utcDate: String?
     public let status: String?
     public let minute: Int?
     public let injuryTime: Int?
