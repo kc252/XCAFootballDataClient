@@ -63,7 +63,7 @@ public struct LiveTeam: Identifiable, Decodable {
     public let formation: String?
     public let lineup: [Player]?
     public let bench: [Player]?
-    public let statistics: [String:Int]
+    public let statistics: [String:Int]?
 }
 
 public struct Coach: Decodable {
