@@ -30,9 +30,9 @@ public struct Match: Identifiable, Decodable {
     public let goals: [Goal]?
     public let penalties: [Penalty]?
     public let bookings: [Booking]?
-    public let substitutions: [Substitution]
-    public let odds: Odds
-    public let referees: [Coach]
+    public let substitutions: [Substitution]?
+    public let odds: Odds?
+    public let referees: [Coach]?
     
 }
 
