@@ -50,8 +50,9 @@ public struct FootballDataClient {
     
     public func fetchLiveScore(competitionId: Int, filterOption: FilterOption = .latest) async throws -> [Match] {
         let today = Date()
+        let tomorrow = Date().dayAfter
         print(today)
-        let url = baseURL + "/competitions/\(competitionId)/matches?date:" + convertDateToString(date:today)
+        let url = baseURL + "/competitions/\(competitionId)/matches?dateFrom:" + convertDateToString(date:today) + "?dateTo:" + convertDateToString(date: tomorrow)
         print(url)
         let urlRequest = URLRequest(url: URL(string: url)!)
         let response: LiveMatchesResponse = try await fetchData(request: urlRequest)
@@ -100,6 +101,14 @@ public struct FootballDataClient {
         return myStringDate
     }
     
+}
+
+extension Date {
+   static var tomorrow:  Date { return Date().dayAfter }
+   static var today: Date {return Date()}
+   var dayAfter: Date {
+      return Calendar.current.date(byAdding: .day, value: 1, to: Date())!
+   }
 }
 
 
