@@ -95,15 +95,15 @@ public struct Coach: Decodable {
 public struct Score: Decodable {
     
     public let winner: String?
-    public let duration: Duration?
+    public let duration: String?
     public let fulltime: Result?
     public let halftime: Result?
     
 }
 
-public enum Duration: Decodable {
-    case REGULAR , EXTRA_TIME , PENALTY_SHOOTOUT
-}
+//public enum Duration: Decodable {
+//    case REGULAR , EXTRA_TIME , PENALTY_SHOOTOUT
+//}
 
 public struct Result: Decodable {
     public var home: Int?
