@@ -49,7 +49,8 @@ public struct FootballDataClient {
     }
     
     public func fetchLiveScore(competitionId: Int, filterOption: FilterOption = .latest) async throws -> [Match] {
-        let url = baseURL + "/competitions/\(competitionId)/matches?status=LIVE,SCHEDULED,IN_PLAY,PAUSED,FINISHED"
+        
+        let url = baseURL + "/competitions/\(competitionId)/matches?status=LIVE,SCHEDULED,IN_PLAY,PAUSED,FINISHED?dateFrom:" + convertDateToString(date: Date())
         let urlRequest = URLRequest(url: URL(string: url)!)
         let response: LiveMatchesResponse = try await fetchData(request: urlRequest)
         guard let matches = response.matches else {
@@ -79,6 +80,22 @@ public struct FootballDataClient {
         let todayText = dateFormatter.string(from: today)
         let tenDaysText = dateFormatter.string(from: tenDays)
         return isUpcoming ? (todayText, tenDaysText) : (tenDaysText, todayText)
+    }
+    
+    func convertDateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        // initially set the format based on your datepicker date / server String
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+        let myString = formatter.string(from: Date()) // string purpose I add here
+        // convert your string to date
+        let yourDate = formatter.date(from: myString)
+        //then again set the date format whhich type of output you need
+        formatter.dateFormat = "yyyy-MM-dd"
+        // again convert your date to string
+        let myStringDate = formatter.string(from: yourDate!)
+
+        return myStringDate
     }
     
 }
