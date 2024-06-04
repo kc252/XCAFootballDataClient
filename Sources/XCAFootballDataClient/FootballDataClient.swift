@@ -51,7 +51,7 @@ public struct FootballDataClient {
     public func fetchLiveScore(competitionId: Int, filterOption: FilterOption = .latest) async throws -> [Match] {
         let today = Date()
         print(today)
-        let url = baseURL + "/competitions/\(competitionId)/matches?status=LIVE,SCHEDULED,IN_PLAY,PAUSED,FINISHED?date:" + convertDateToString(date:today)
+        let url = baseURL + "/competitions/\(competitionId)/matches?date:" + convertDateToString(date:today)
         print(url)
         let urlRequest = URLRequest(url: URL(string: url)!)
         let response: LiveMatchesResponse = try await fetchData(request: urlRequest)
