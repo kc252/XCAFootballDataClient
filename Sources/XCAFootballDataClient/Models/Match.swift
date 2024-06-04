@@ -115,16 +115,16 @@ public struct Goal: Decodable {
     public var injuryTime: Int?
     public var type: String
     public var team: Team?
-    public var score: FullTime
+    public var score: FullTime?
     public var assist: Player?
 }
 
 public struct FullTime: Decodable {
-    public let home, away: Int
+    public let home, away: Int?
 }
 
 public struct Odds: Decodable {
-    public let homeWin, draw, awayWin: Double
+    public let homeWin, draw, awayWin: Double?
 }
 
 public struct Booking: Decodable {
