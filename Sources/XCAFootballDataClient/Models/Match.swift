@@ -96,8 +96,8 @@ public struct Score: Decodable {
     
     public let winner: String?
     public let duration: String?
-    public let fulltime: Result?
-    public let halftime: Result?
+    public let fullTime: Result?
+    public let halfTime: Result?
     
 }
 
