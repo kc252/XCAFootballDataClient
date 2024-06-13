@@ -49,7 +49,7 @@ public struct FootballDataClient {
     }
     
     public func fetchLiveScore(filterOption: FilterOption = .latest) async throws -> [Match] {
-        let url = baseURL + "/competitions/2018/matches"
+        let url = baseURL + "/competitions/2001/matches"
         let urlRequest = URLRequest(url: URL(string: url)!)
         let response: LiveMatchesResponse = try await fetchData(request: urlRequest)
         guard let matches = response.matches else {
