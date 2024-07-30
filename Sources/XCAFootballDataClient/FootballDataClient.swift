@@ -1,16 +1,21 @@
 //
 //  FootballDataClient.swift
 //
-//  Created by Alfian Losari on 23/06/23.
+//  Created by Kevin Campbell on 02/06/24.
 //
 
 import Foundation
 
 public struct FootballDataClient {
     
+    //Football Stats
     private let urlSession = URLSession.shared
     private let apiKey: String
     private let baseURL = "https://api.football-data.org/v4"
+    
+    //Highlights
+    private let highlightApiKey: String
+    private let highlightUrl = "https://football-highlights-api.p.rapidapi.com"
     
     private let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -24,8 +29,9 @@ public struct FootballDataClient {
         return formatter
     }()
     
-    public init(apiKey: String) {
+    public init(apiKey: String, highlightApiKey: String) {
         self.apiKey = apiKey
+        self.highlightApiKey = highlightApiKey
     }
     
     public func fetchStandings(competitionId: Int, filterOption: FilterOption = .latest) async throws -> [TeamStandingTable] {
@@ -56,6 +62,16 @@ public struct FootballDataClient {
             throw "Live matches not found"
         }
         return matches
+    } 
+    
+    public func fetchHighlights(matchId: Int, filterOption: FilterOption = .latest) async throws -> [Highlight] {
+        let url = highlightUrl + "/highlights/\(matchId)"
+        let urlRequest = URLRequest(url: URL(string: url)!)
+        let response: HighlightsResponse = try await fetchData(request: urlRequest)
+        guard let highlights = response.highlights else {
+            throw "Highlights not found"
+        }
+        return highlights
     }
     
     private func fetchData<D: Decodable>(request: URLRequest) async throws -> D {
